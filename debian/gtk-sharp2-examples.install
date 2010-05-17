@@ -1,0 +1,6 @@
+sample/pixmaps/	/usr/share/gtk-sharp2-examples/
+sample/Makefile	/usr/share/gtk-sharp2-examples/
+sample/*.exe	/usr/share/gtk-sharp2-examples/
+sample/*.cs	/usr/share/gtk-sharp2-examples/
+sample/GtkDemo/*.exe	/usr/share/gtk-sharp2-examples/GtkDemo
+sample/GtkDemo/*.cs	/usr/share/gtk-sharp2-examples/GtkDemo
