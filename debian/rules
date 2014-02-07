@@ -4,12 +4,10 @@
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 export MONO_SHARED_DIR=$(CURDIR)
 
-include /usr/share/dpatch/dpatch.make
-
 CFLAGS ?= -O2 -Wall -g
 LDFLAGS += -Wl,-z,defs -Wl,-O1 -Wl,--as-needed
 
-API_VERSION = 2.12.10
+API_VERSION = 2.12.10-1ubuntu1
 
 UPVERSION = $(shell dpkg-parsechangelog | grep ^Vers | cut -d\  -f2 | sed 's,-.*,,')
 NEXT_UPVERSION = $(shell perl -e '$$_=pop; s/(\d+)$$/$$1+1/e; print' $(UPVERSION))
@@ -33,8 +31,9 @@ get-orig-source:
 		--rename
 
 config: config-stamp
-config-stamp: patch-stamp
+config-stamp:
 	dh_testdir
+	dh_autoreconf --as-needed
 	CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure --prefix=/usr RUNTIME=/usr/bin/cli CSC=/usr/bin/mono-csc MONO_CAIRO_LIBS=-r:Mono.Cairo MONO_CAIRO_CFLAGS=" "
 	touch config-stamp
 
@@ -52,12 +51,13 @@ build-arch-stamp: config-stamp
 	$(MAKE) RUNTIME=/usr/bin/cli
 	touch build-arch-stamp
 
-clean: unpatch
+clean:
 	dh_testdir
 	dh_testroot
 	[ ! -f Makefile ] || $(MAKE) distclean RUNTIME=/usr/bin/cli
 	rm -f config-stamp build-indep-stamp build-arch-stamp
 	rm -rf $(MONO_SHARED_DIR)/.wapi
+	dh_autoreconf_clean
 	dh_clean
 
 install:

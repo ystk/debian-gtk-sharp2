@@ -3,28 +3,39 @@ Section: libs
 Priority: optional
 Maintainer: Debian CLI Libraries Team <pkg-cli-libs-team@lists.alioth.debian.org>
 Uploaders: Mirco Bauer <meebey@debian.org>, Sebastian Dröge <slomo@debian.org>
-Build-Depends: debhelper (>= 5), cli-common-dev (>= 0.5.7), dpatch, mono-devel (>= 2.4.2.3), monodoc-base (>= 1.0), libmono-dev, pkg-config, libglib2.0-dev (>= 2.12.0), libgtk2.0-dev (>= 2.12.0), libpango1.0-dev, libglade2-dev (>= 2.3.6), libmono-cairo2.0-cil
-Standards-Version: 3.8.4
+Build-Depends: cli-common-dev (>= 0.5.7),
+               debhelper (>= 5),
+               dh-autoreconf,
+               libglade2-dev (>= 2.3.6),
+               libglib2.0-dev (>= 2.12.0),
+               libgtk2.0-dev (>= 2.12.0),
+               libmono-cairo2.0-cil,
+               libpango1.0-dev,
+               mono-devel (>= 2.4.2.3),
+               monodoc-base (>= 1.0),
+               pkg-config
+Standards-Version: 3.9.3
 Homepage: http://www.mono-project.com/GtkSharp
-Vcs-Svn: svn://svn.debian.org/pkg-cli-libs/packages/gtk-sharp2/trunk
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-cli-libs/packages/gtk-sharp2/trunk/
+Vcs-Git: git://git.debian.org/git/pkg-cli-libs/packages/gtk-sharp2.git
+Vcs-Browser: http://git.debian.org/?p=pkg-cli-libs/packages/gtk-sharp2.git
 
 Package: gtk-sharp2
 Architecture: all
 Depends: gtk-sharp2-examples (= ${source:Version}),
- gtk-sharp2-gapi (= ${source:Version}),
- libglib2.0-cil-dev (= ${source:Version}),
- libgtk2.0-cil-dev (= ${source:Version}),
- libglade2.0-cil-dev (= ${source:Version}),
- monodoc-gtk2.0-manual (= ${source:Version})
-Description: GTK# 2.10 suite, CLI bindings for GTK+ 
+         gtk-sharp2-gapi (= ${source:Version}),
+         libglade2.0-cil-dev (= ${source:Version}),
+         libglib2.0-cil-dev (= ${source:Version}),
+         libgtk2.0-cil-dev (= ${source:Version}),
+         monodoc-gtk2.0-manual (= ${source:Version}),
+         ${misc:Depends}
+Description: GTK# 2.10 suite, CLI bindings for GTK+
  GTK# 2.10 is a CLI (.NET) language binding for the GTK+ 2.10 toolkit
  .
  gtk-sharp2 is a metapackage containing dependencies for the GTK# 2.10 suite.
 
 Package: gtk-sharp2-examples
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${cli:Depends}
+Depends: ${cli:Depends}, ${misc:Depends}, ${shlibs:Depends}
 Description: sample applications for the GTK# 2.10 toolkit
  GTK# 2.10 is a CLI (.NET) language binding for the GTK+ 2.10 toolkit
  .
@@ -36,7 +47,11 @@ Package: gtk-sharp2-gapi
 Architecture: any
 Conflicts: gtk-sharp2-unstable-gapi
 Replaces: gtk-sharp2-unstable-gapi
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${cli:Depends}, libxml-libxml-perl, libglib2.0-cil (>= ${source:Version})
+Depends: libglib2.0-cil (>= ${source:Version}),
+         libxml-libxml-perl,
+         ${cli:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends}
 Description: C source parser and C# code generator for GObject based APIs
  GTK# 2.10 is a CLI (.NET) language binding for the GTK+ 2.10 toolkit
  .
@@ -48,7 +63,7 @@ Description: C source parser and C# code generator for GObject based APIs
 Package: libglib2.0-cil
 Architecture: any
 Suggests: monodoc-gtk2.0-manual
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${cli:Depends}
+Depends: ${cli:Depends}, ${misc:Depends}, ${shlibs:Depends}
 Replaces: gtk-sharp2-gapi (<< 2.10.0-1)
 Description: CLI binding for the GLib utility library 2.12
  This package provides the glib-sharp assembly that allows CLI (.NET) programs
@@ -76,7 +91,7 @@ Description: CLI binding for the GLib utility library 2.12
 Package: libgtk2.0-cil
 Architecture: any
 Suggests: monodoc-gtk2.0-manual
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${cli:Depends}
+Depends: ${cli:Depends}, ${misc:Depends}, ${shlibs:Depends}
 Replaces: gtk-sharp2-gapi (<< 2.10.0-1)
 Description: CLI binding for the GTK+ toolkit 2.12
  This package provides the atk-sharp, gdk-sharp, gtk-dotnet, gtk-sharp and
@@ -89,7 +104,9 @@ Description: CLI binding for the GTK+ toolkit 2.12
 
 Package: libgtk2.0-cil-dev
 Architecture: any
-Depends: libgtk2.0-cil (= ${binary:Version}), libglib2.0-cil-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libglib2.0-cil-dev (= ${binary:Version}),
+         libgtk2.0-cil (= ${binary:Version}),
+         ${misc:Depends}
 Replaces: libgtk2.0-cil (<< 2.12.9-2)
 Description: CLI binding for the GTK+ toolkit 2.12
  This package provides the atk-sharp, gdk-sharp, gtk-dotnet, gtk-sharp and
@@ -104,7 +121,7 @@ Description: CLI binding for the GTK+ toolkit 2.12
 Package: libglade2.0-cil
 Architecture: any
 Suggests: monodoc-gtk2.0-manual
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${cli:Depends}
+Depends: ${cli:Depends}, ${misc:Depends}, ${shlibs:Depends}
 Replaces: gtk-sharp2-gapi (<< 2.10.0-1)
 Description: CLI binding for the Glade libraries 2.6
  This package provides the glade-sharp assembly that allows CLI (.NET) programs
@@ -116,7 +133,9 @@ Description: CLI binding for the Glade libraries 2.6
 
 Package: libglade2.0-cil-dev
 Architecture: any
-Depends: libglade2.0-cil (= ${binary:Version}), libgtk2.0-cil-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libglade2.0-cil (= ${binary:Version}),
+         libgtk2.0-cil-dev (= ${binary:Version}),
+         ${misc:Depends}
 Replaces: libglade2.0-cil (<< 2.12.9-2)
 Description: CLI binding for the Glade libraries 2.6
  This package provides the glade-sharp assembly that allows CLI (.NET) programs

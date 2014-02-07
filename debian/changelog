@@ -1,3 +1,56 @@
+gtk-sharp2 (2.12.10-5) unstable; urgency=low
+
+  * [b130b4f] debian/patches: add 06_IconTheme_use_glib_marshaller.
+    This makes IconTheme.get_SearchPath() 64-bit safe.
+
+ -- Carlos Martín Nieto <cmn@dwim.me>  Wed, 05 Sep 2012 23:22:15 +0100
+
+gtk-sharp2 (2.12.10-4) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Include <glib.h> rather than individual headers (Closes: #665550).
+
+  [ Christopher James Halse Rogers ]
+  * debian/patches/04_fix_glib_2.31_threading.dpatch:
+    + GLib 2.31 always has threading support, always initialises it, and has
+      dropped some deprecated functions.  Update glibsharpglue and 
+      Thread.cs to match.  Fixes FTBFS (LP: #911125, LP: #935518)
+  * debian/control:
+    + Add versioned dependency on glib > 2.31 to libglib2.0-cil, as we depend
+      on the threading behaviour of those GLibs.
+  * debian/control:
+  * debian/rules:
+    + Add dh_autoreconf to update build system for patch
+  * debian/patches/99_ltmain_as_needed:
+    + Drop; dh_autoreconf does this better
+
+  [ Iain Lane ]
+  * [7d1433b] Remove explicit glib Depends for libglib2.0-cil.  We can get
+    this right on our own without hardcoding it.  Thanks to Michael Biebl
+    <biebl@debian.org>
+  * [741d13f] Add misc:Depends to gtk-sharp2. Thanks, Lintian
+  * [236a8a8] Convert to 3.0 (quilt)
+  * [4ed8f5e] Standards-Version → 3.9.3, no changes
+  * [1a8ebc7] Run wrap-and-sort to tidy up
+
+ -- Iain Lane <laney@debian.org>  Wed, 11 Apr 2012 11:44:16 +0100
+
+gtk-sharp2 (2.12.10-3) unstable; urgency=low
+
+  * No-change rebuild for CLR 4.0 transition 
+
+ -- Iain Lane <laney@debian.org>  Mon, 23 Jan 2012 19:57:58 +0000
+
+gtk-sharp2 (2.12.10-2) unstable; urgency=low
+
+  [ Julian Taylor ]
+  * [87af615] initial upstream branch
+  * [2c8987c] Imported Upstream version 2.12.10
+  * [b47eac8] drop unnecessary dependency on libmono-dev
+  * [5c8dcfc] update Vcs-* fields to point to git
+
+ -- Julian Taylor <jtaylor.debian@googlemail.com>  Mon, 11 Jul 2011 23:11:57 +0100
+
 gtk-sharp2 (2.12.10-1) unstable; urgency=low
 
   * New upstream release
