@@ -1,0 +1,42 @@
+From: Bertrand Lorentz <bertrand.lorentz@gmail.com>
+Date: Sat, 5 Jul 2014 15:52:56 +0200
+Subject: [PATCH 1/2] glib: Fix native GLib warnings when disposing SourceProxy
+ objects
+
+When an instance of SourceProxy was finalized, we would try to remove
+the corresponding source, even if it was already removed. This now
+causes native GLib to print out warnings because it can't find the
+source ID.
+
+Now Source.Remove only calls g_source_remove if we really had a handler
+registered for the ID we're removing.
+
+Origin: upstream, 2.12.26, commit:3a01260d87c738361f1b72673f73135b4d7545e7
+Bug-Debian: https://bugs.debian.org/776145
+---
+ glib/Source.cs | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/glib/Source.cs b/glib/Source.cs
+index b62c3c5..89e691f 100644
+--- a/glib/Source.cs
++++ b/glib/Source.cs
+@@ -54,9 +54,15 @@ namespace GLib {
+ 
+ 		public static bool Remove (uint tag)
+ 		{
+-			lock (Source.source_handlers)
+-				source_handlers.Remove (tag);
+-			return g_source_remove (tag);
++			// g_source_remove always returns true, so we follow that
++			bool ret = true;
++
++			lock (Source.source_handlers) {
++				if (source_handlers.Remove (tag)) {
++					ret = g_source_remove (tag);
++				}
++			}
++			return ret;
+ 		}
+ 	}
+ }

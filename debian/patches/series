@@ -3,4 +3,5 @@
 04_fix_glib_2.31_threading
 05_glib_single_include
 06_IconTheme_use_glib_marshaller
-
+0001-glib-Fix-native-GLib-warnings-when-disposing-SourceP.patch
+0002-Check-that-source_handlers-contains-the-tag.patch

@@ -1,0 +1,24 @@
+From: Cody Russell <cody@jhu.edu>
+Date: Fri, 11 Jul 2014 09:51:53 -0500
+Subject: [PATCH 2/2] Check that source_handlers contains the tag.
+
+Origin: upstream, 2.12.26, commit:9c78f7019c8622a3fc7a10c3d3dc8dcb5f44a289
+Bug-Debian: https://bugs.debian.org/776145
+---
+ glib/Source.cs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/glib/Source.cs b/glib/Source.cs
+index 89e691f..cf9f4ba 100644
+--- a/glib/Source.cs
++++ b/glib/Source.cs
+@@ -58,7 +58,8 @@ namespace GLib {
+ 			bool ret = true;
+ 
+ 			lock (Source.source_handlers) {
+-				if (source_handlers.Remove (tag)) {
++				if (source_handlers.Contains (tag)) {
++					source_handlers.Remove (tag);
+ 					ret = g_source_remove (tag);
+ 				}
+ 			}
